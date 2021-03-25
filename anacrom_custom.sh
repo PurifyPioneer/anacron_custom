@@ -40,8 +40,8 @@ check_backup_age () {
 # run rsnapshot and update the lastrun_* file
 # args #1: daily, weekly, monthly
 do_backup () {
-    /usr/bin/rsnapshot $1
-
+    /usr/local/bin/rsnapshot $1
+    echo rsnapshot exit code: $?
     if [[ -f lastrun.$1 ]]; then {
         rm lastrun.$1
     } fi
