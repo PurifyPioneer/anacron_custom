@@ -43,7 +43,7 @@ do_backup () {
     /usr/local/bin/rsnapshot $1
     rsnapshot_exit_code=$?
 
-    if [[ rsnapshot_exit_code == 0 ]]; then {
+    if [[ rsnapshot_exit_code -eq 0 ]]; then {
         echo "Rsnapshot backup successful"
         
         if [[ -f lastrun.$1 ]]; then {
@@ -51,7 +51,7 @@ do_backup () {
         } fi
         /usr/bin/touch "lastrun.$1"
     } else {
-        echo "Encountered proble during rsnapshot backup (exit code: $rsnapshot_exit_code)"
+        echo "Encountered problem during rsnapshot backup (exit code: $rsnapshot_exit_code)"
     } fi
     
 }
@@ -59,7 +59,7 @@ do_backup () {
 # do daily backup if needed
 timestamp_daily=$(check_file_timestamp daily)
 echo "Last daily backup: $(date -d @$timestamp_daily '+%Y-%m-%d %H:%M:%S')"
-if [[ $(check_backup_age daily 86000) == true ]]; then {
+if [[ $(check_backup_age daily 100) == true ]]; then {
     do_backup daily
 } else {
     echo "Do not need to run daily backup"
