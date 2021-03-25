@@ -41,11 +41,19 @@ check_backup_age () {
 # args #1: daily, weekly, monthly
 do_backup () {
     /usr/local/bin/rsnapshot $1
-    echo rsnapshot exit code: $?
-    if [[ -f lastrun.$1 ]]; then {
-        rm lastrun.$1
-    } fi
-    /usr/bin/touch "lastrun.$1"
+    rsnapshot_exit_code=$?
+
+    fi [[ rsnapshot_exit_code == 0 ]]; then {
+        echo "Rsnapshot backup successful"
+        
+        if [[ -f lastrun.$1 ]]; then {
+            rm lastrun.$1
+        } fi
+        /usr/bin/touch "lastrun.$1"
+    } else {
+        echo "Encountered proble during rsnapshot backup (exit code: $rsnapshot_exit_code"
+    }
+    
 }
 
 # do daily backup if needed
@@ -78,5 +86,5 @@ if [[ $(check_backup_age monthly 16934000) == true ]]; then {
 ## will shutdown the system after backup
 if [ "$shutdown" = true ]; then
     echo "Would shutdown system"
-    #/sbin/shutdown
+    /sbin/shutdown
 fi
