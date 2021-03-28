@@ -84,7 +84,12 @@ if [[ $(check_backup_age monthly 16934000) == true ]]; then {
 } fi
 
 ## will shutdown the system after backup
-if [ "$shutdown" = true ]; then
-    echo "Would shutdown system"
-    /sbin/shutdown -h now
-fi
+## makes the assuption that a system start between 12 and 13 with
+## is always executed automatically
+if [ "$shutdown" = true ]; then {
+    script_start_hour=$(date -d @$timestamp_now '+%H')
+    if [[ script_start_hour -eq 12 ]]; then {
+        echo "Backup finished. Shutting down the system."
+        /sbin/shutdown -h now
+    } fi
+} fi
