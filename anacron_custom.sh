@@ -47,7 +47,7 @@ do_backup () {
         echo "Rsnapshot backup successful"
         
         if [[ -f lastrun.$1 ]]; then {
-            rm lastrun.$1
+            /bin/rm lastrun.$1
         } fi
         /usr/bin/touch "lastrun.$1"
     } else {
