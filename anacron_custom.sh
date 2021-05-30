@@ -67,7 +67,7 @@ if [[ $(check_backup_age daily 86000) == true ]]; then {
 
 # do weekly backup if needed
 timestamp_weekly=$(check_file_timestamp weekly)
-echo "Last daily backup: $(date -d @$timestamp_weekly '+%Y-%m-%d %H:%M:%S')"
+echo "Last weekly backup: $(date -d @$timestamp_weekly '+%Y-%m-%d %H:%M:%S')"
 if [[ $(check_backup_age weekly 604000) == true ]]; then {
     do_backup weekly
 } else {
@@ -76,7 +76,7 @@ if [[ $(check_backup_age weekly 604000) == true ]]; then {
 
 # do monthly backup if needed
 timestamp_monthly=$(check_file_timestamp monthly)
-echo "Last daily backup: $(date -d @$timestamp_monthly '+%Y-%m-%d %H:%M:%S')"
+echo "Last monthly backup: $(date -d @$timestamp_monthly '+%Y-%m-%d %H:%M:%S')"
 if [[ $(check_backup_age monthly 16934000) == true ]]; then {
     do_backup monthly
 } else {
