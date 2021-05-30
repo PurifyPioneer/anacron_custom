@@ -43,13 +43,13 @@ do_backup () {
     /usr/local/bin/rsnapshot $1
     rsnapshot_exit_code=$?
 
+    if [[ -f lastrun.$1 ]]; then {
+		/bin/rm lastrun.$1
+    } fi
+    /usr/bin/touch "lastrun.$1"
+
     if [[ rsnapshot_exit_code -eq 0 ]]; then {
         echo "Rsnapshot backup successful"
-        
-        if [[ -f lastrun.$1 ]]; then {
-            /bin/rm lastrun.$1
-        } fi
-        /usr/bin/touch "lastrun.$1"
     } else {
         echo "Encountered problem during rsnapshot backup (exit code: $rsnapshot_exit_code)"
     } fi
